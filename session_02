@@ -1,0 +1,80 @@
+// bit_utils.c - eMobility ITI, Winter 2022
+// Awab Anwar Omar
+​
+// TODO: Implement the following Macros like a function in a generic way !
+// NOTE: If there're multiple ways please feel free to implement all possible solutions .
+​
+​
+#ifndef BIT_UTILS_H
+#define BIT_UTILS_H
+​
+#define SET_BIT(REG,Bit_NO)     (REG) |= (1 << (Bit_NO)) 
+
+#define CLR_BIT(REG,Bit_NO)     (REG) &= ~(1 << Bit_NO)
+
+// Get The Bit number Bit_NO    
+#define GET_BIT(REG,Bit_NO)     (((REG) & (1 << Bit_NO)) >> Bit_NO)
+
+// Right Shift by No
+#define RSHFT_REG(REG,NO)       (REG) >> (NO) 
+ 
+// Left Shift by NO
+#define LSHFT_REG(REG,NO)       (REG) = (REG) << (NO)
+
+// Circular Right Shift
+#define CRSHFT_REG(REG,NO)      (REG) = ((REG) >> NO) | ((REG) << sizeof(char) - NO)
+
+// Circular Left Shift
+#define CLSHFT_REG(REG,NO)      (REG) = ((REG) << NO) | ((REG) >> sizeof(char) - NO)
+
+// Assign a Value to a Register
+#define ASSIGN_REG(REG,VALUE)   (REG) = ((REG) & 0) | VALUE
+
+// Set The Register [1s]
+#define SET_REG(REG)            (REG) &= ~0
+
+// Clear the Register [0s]
+#define CLR_REG(REG)            (REG) &= 0
+
+// Toggle a Bit in Register
+#define TGL_BIT(REG,Bit_NO)     (REG) ^= (1 << Bit_NO)
+
+// Toggle a Register Value
+#define TGL_REG(REG)            (REG) ^= ~0
+
+// Set The High Nibble in a Register   
+#define SET_H_NIB(REG)          (REG) |= ((~(1u << 3)) >> 4) << 4
+
+// Set The Low Nibble in a Register
+#define SET_L_NIB(REG)          (REG) |= (~(1u << 3)) >> 4   // 1u doesn't work
+
+// Clear The High Nibble in a Register
+#define CLR_H_NIB(REG)          (REG) &= (~(1u << 3)) >> 4   // 1u XXXXXX
+
+// Clear The Low Nibble in a Register
+#define CLR_L_NIB(REG)          (REG) &= ((~(1u << 3)) >> 4) << 4    
+
+// Get The High Nibble in a Register
+#define GET_H_NIB(REG)          (REG) = ((REG) & ((~(1u << 3)) >> 4) << 4) >> 4
+
+// Get The Low Nibble in a Register
+#define GET_L_NIB(REG)          (REG) &= (~(1u << 3)) >> 4    // Same as clear High nibble
+
+// Assign The High Nibble in a Register
+#define ASSIGN_H_NIB(REG,VALUE) (REG) = ((REG) & (~(1u << 3)) >> 4) | (VALUE) << 4   // 1u XXXXXX
+
+// Assign the Low Nibble in a Register
+#define ASSIGN_L_NIB(REG,VALUE) (REG) = ((REG) & ((~(1u << 3)) >> 4) << 4) | VALUE
+
+// Toggle the High Nibble in a Register
+#define TGL_H_NIB(REG)          (REG) ^= ((~(1u << 3)) >> 4) << 4
+
+// Toggle the Low Nibble in a Register
+#define TGL_L_NIB(REG)          (REG) ^= (~(1u << 3)) >> 4 
+
+// Swap the Nibbles in a Register
+#define SWAP_NIB(REG)           (REG) = (((REG) & ((~(1u << 3)) >> 4) << 4) >> 4) | (((REG) & (~(1u << 3)) >> 4) << 4)   // HN >> 4 | LN << 4
+​
+​
+​
+#endif
